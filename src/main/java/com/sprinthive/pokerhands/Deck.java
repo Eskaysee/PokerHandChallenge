@@ -23,11 +23,19 @@ public class Deck {
         return cards.size();
     }
 
+    /**
+     * @param numberOfCards the number of cards to pick from the deck.
+     * @return an array of cards dealt.
+     * */
     public synchronized Card[] pick(int numberOfCards) throws NotEnoughCardsInDeckException {
         if(numberOfCards > 52){
             throw new IllegalArgumentException("Number of cards to pick from a deck must be 52 or less.");
         }
-        //Todo: This method still needs to be implemented
-        return null;
+        Card[] cardsSelected = new Card[numberOfCards];
+        for (int i = 0; i < numberOfCards; i++) {
+            cardsSelected[i] = this.cards.remove(0);
+        }
+        Collections.shuffle(this.cards);
+        return cardsSelected;
     }
 }
