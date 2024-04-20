@@ -30,12 +30,16 @@ public class Deck {
     public synchronized Card[] pick(int numberOfCards) throws NotEnoughCardsInDeckException {
         if(numberOfCards > 52){
             throw new IllegalArgumentException("Number of cards to pick from a deck must be 52 or less.");
+        } else if(numberOfCards > getNumberOfCards()){
+            throw new NotEnoughCardsInDeckException("Number of cards to pick from a deck should not exceed deck size.");
+        } else if(numberOfCards < 0 ){
+            throw new IllegalArgumentException("Number of cards to pick from a deck cannot be negative or null.");
         }
         Card[] cardsSelected = new Card[numberOfCards];
         for (int i = 0; i < numberOfCards; i++) {
-            cardsSelected[i] = this.cards.remove(0);
+            cardsSelected[i] = cards.remove(0);
         }
-        Collections.shuffle(this.cards);
+        Collections.shuffle(cards);
         return cardsSelected;
     }
 }

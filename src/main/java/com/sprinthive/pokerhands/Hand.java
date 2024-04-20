@@ -1,6 +1,5 @@
 package com.sprinthive.pokerhands;
 
-import com.sprinthive.pokerhands.handrank.BadPokerHandRanker;
 import com.sprinthive.pokerhands.handrank.HandRank;
 import com.sprinthive.pokerhands.handrank.HandRanker;
 import com.sprinthive.pokerhands.handrank.HandRankerImpl;

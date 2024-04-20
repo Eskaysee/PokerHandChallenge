@@ -4,7 +4,9 @@ import com.sprinthive.pokerhands.exception.NotEnoughCardsInDeckException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DeckTest {
 
@@ -80,5 +82,34 @@ public class DeckTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> deck.pick(100),
                 "Can not pick more than 52 cards from a deck");
+    }
+
+    @Test
+    public void testPickedHandExceedDeckSize() {
+        Deck deck = new Deck();
+        deck.pick(30);
+        assertEquals(22, deck.getNumberOfCards(), "Was expecting 22 card in the deck after a pick of 30");
+        assertThrows(NotEnoughCardsInDeckException.class,
+                () -> deck.pick(25),
+                "Can not pick more cards than whats in the deck");
+    }
+
+    @Test
+    public void testDeckPickNegative() {
+        Deck deck = new Deck();
+        assertThrows(IllegalArgumentException.class,
+                () -> deck.pick(-1),
+                "Can not pick a negative number for cards from the deck");
+    }
+
+    @Test
+    public void testDeckUniqueness() {      //No duplicate cards allowed in the deck
+        Deck deck = new Deck();
+        Card[] cards = deck.pick(52);
+        for (int i = 0; i < cards.length; i++) {
+            for (int j = i + 1; j < cards.length; j++) {
+                Assertions.assertNotEquals(cards[i], cards[j], "Deck must not contain duplicate cards");
+            }
+        }
     }
 }

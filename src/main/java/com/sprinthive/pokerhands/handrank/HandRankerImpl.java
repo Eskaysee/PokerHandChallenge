@@ -25,7 +25,7 @@ public class HandRankerImpl implements HandRanker {
         CardRank rank1 = cards.get(0).getRank();
         CardRank rank2=null, kicker=null;
         //qty1 quantity of a particular card in the hand
-        int qty1 = 1, qty2 = 0;     //in the case of full house or 2 pair, qty1 is
+        int qty1 = 1, qty2 = 0;     //in the case of full house and 2 pair, qty1 is
                                     //associated with rank2 and qty2 associated with rank1
 
         //gathering the details about the hand: flush, straight & rank repetitions

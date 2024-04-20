@@ -3,9 +3,9 @@ package com.sprinthive.pokerhands;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HandTest {
@@ -181,23 +181,46 @@ public class HandTest {
     }
 
     @Test
-    public void testCompareStraightToStraight() {
+    public void testCompareEqualStraights() {
         ArrayList<Card> lowStraightList = new ArrayList<Card>(5);
-        lowStraightList.add(new Card(CardRank.NINE, Suit.CLUBS));
-        lowStraightList.add(new Card(CardRank.EIGHT, Suit.HEARTS));
-        lowStraightList.add(new Card(CardRank.QUEEN, Suit.CLUBS));
-        lowStraightList.add(new Card(CardRank.JACK, Suit.CLUBS));
-        lowStraightList.add(new Card(CardRank.TEN, Suit.CLUBS));
+        lowStraightList.add(new Card(CardRank.NINE, Suit.SPADES));
+        lowStraightList.add(new Card(CardRank.EIGHT, Suit.DIAMONDS));
+        lowStraightList.add(new Card(CardRank.QUEEN, Suit.SPADES));
+        lowStraightList.add(new Card(CardRank.JACK, Suit.SPADES));
+        lowStraightList.add(new Card(CardRank.TEN, Suit.HEARTS));
         Hand lowStraightHand = new Hand(lowStraightList);
         assertEquals("Straight, queen high", lowStraightHand.describeHandRank());
         ArrayList<Card> highStraightList = new ArrayList<Card>(5);
         highStraightList.add(new Card(CardRank.NINE, Suit.CLUBS));
-        highStraightList.add(new Card(CardRank.KING, Suit.HEARTS));
+        highStraightList.add(new Card(CardRank.EIGHT, Suit.HEARTS));
         highStraightList.add(new Card(CardRank.QUEEN, Suit.CLUBS));
         highStraightList.add(new Card(CardRank.JACK, Suit.CLUBS));
         highStraightList.add(new Card(CardRank.TEN, Suit.CLUBS));
         Hand highStraightHand = new Hand(highStraightList);
-        assertEquals("Straight, king high", highStraightHand.describeHandRank());
-        assertTrue(lowStraightHand.compareTo(highStraightHand) < 0);
+        assertEquals("Straight, queen high", highStraightHand.describeHandRank());
+        assertFalse(lowStraightHand.compareTo(highStraightHand) != 0);
+    }
+
+    @Test
+    public void testCompare2PairKicker() {
+        ArrayList<Card> twoPair1 = new ArrayList<>(5);
+        twoPair1.add(new Card(CardRank.NINE, Suit.CLUBS));
+        twoPair1.add(new Card(CardRank.EIGHT, Suit.HEARTS));
+        twoPair1.add(new Card(CardRank.TEN, Suit.DIAMONDS));
+        twoPair1.add(new Card(CardRank.TEN, Suit.SPADES));
+        twoPair1.add(new Card(CardRank.EIGHT, Suit.CLUBS));
+        Hand first2Pair = new Hand(twoPair1);
+        assertEquals("Two pair, tens and eights", first2Pair.describeHandRank());
+
+        ArrayList<Card> twoPair2 = new ArrayList<>(5);
+        twoPair2.add(new Card(CardRank.QUEEN, Suit.CLUBS));
+        twoPair2.add(new Card(CardRank.EIGHT, Suit.DIAMONDS));
+        twoPair2.add(new Card(CardRank.TEN, Suit.HEARTS));
+        twoPair2.add(new Card(CardRank.TEN, Suit.CLUBS));
+        twoPair2.add(new Card(CardRank.EIGHT, Suit.SPADES));
+        Hand second2Pair = new Hand(twoPair2);
+        assertEquals("Two pair, tens and eights", second2Pair.describeHandRank());
+
+        assertTrue(first2Pair.compareTo(second2Pair) < 0);
     }
 }
